@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+
+import LoginScreen from './Screens/LoginScreen'; // Import LoginScreen
+import TaskScreen from './Screens/TaskScreen'; // Import TaskScreen
+import CalendarScreen from './Screens/CalendarScreen'; // Import CalendarScreen
+import ProfileScreen from './Screens/ProfileScreen'; // Import ProfileScreen
+import GoalsScreen from './Screens/GoalsScreen'; // Import GoalsScreen
+
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function App() {
+    const [loggedIn, setLoggedIn] = useState(false);
+    const handleLogin = (result) => {
+        setLoggedIn(result)
+        if (!result) {
+            alert('Wrong credentials. Please try again')
+            navigator.navigate('Login')
+        }
+    };
+    return (
+        <NavigationContainer>
+            {loggedIn ? (
+                <Drawer.Navigator initialRouteName="TaskScreen">
+                    <Drawer.Screen name="TaskScreen" component={TaskScreen}/>
+                    <Drawer.Screen name="CalendarScreen" component={CalendarScreen}/>
+                    <Drawer.Screen name="ProfileScreen" component={ProfileScreen}/>
+                    <Drawer.Screen name="GoalsScreen" component={GoalsScreen}/>
+                </Drawer.Navigator>
+            ) : (
+                <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
+                    <Stack.Screen name="Login" component={() => <LoginScreen onLogin={handleLogin}/>}/>
+                </Stack.Navigator>
+
+            )}
+        </NavigationContainer>
+    );
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
