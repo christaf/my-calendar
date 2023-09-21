@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import {Calendar} from "react-native-calendars";
 
 const CalendarScreen = () => {
+    const [selected, setSelected] = useState('');
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Kalendarz</Text>
+            <Calendar
+                onDayPress={day => {
+                    setSelected(day.dateString);
+                }}
+                markedDates={{
+                    [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
+                }}
+            />
         </View>
     );
 };
