@@ -1,20 +1,38 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Calendar} from "react-native-calendars";
+import NewTaskPopup from "../components/NewTaskPopup";
 
 const CalendarScreen = () => {
     const [selected, setSelected] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+    const handleDayPress = (day) => {
+        setSelectedDate(day.dateString);
+        setIsPopupVisible(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupVisible(false);
+    };
+
+    const handleAddTask = (taskText) => {
+        // Implement logic to add the task to the selected date.
+    };
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Kalendarz</Text>
             <Calendar
                 onDayPress={day => {
                     setSelected(day.dateString);
+                    handleDayPress(day)
                 }}
                 markedDates={{
                     [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
                 }}
             />
+            <NewTaskPopup visible={isPopupVisible} onAddTask={handleAddTask} onClose={handleClosePopup}/>
         </View>
     );
 };

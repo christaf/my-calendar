@@ -4,11 +4,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import LoginScreen from './Screens/LoginScreen'; // Import LoginScreen
-import TaskScreen from './Screens/TaskScreen'; // Import TaskScreen
-import CalendarScreen from './Screens/CalendarScreen'; // Import CalendarScreen
-import ProfileScreen from './Screens/ProfileScreen'; // Import ProfileScreen
-import GoalsScreen from './Screens/GoalsScreen'; // Import GoalsScreen
+import LoginScreen from './pages/LoginScreen'; // Import LoginScreen
+import TaskScreen from './pages/TaskScreen'; // Import TaskScreen
+import CalendarScreen from './pages/CalendarScreen'; // Import CalendarScreen
+import ProfileScreen from './pages/ProfileScreen'; // Import ProfileScreen
+import GoalsScreen from './pages/GoalsScreen'; // Import GoalsScreen
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
