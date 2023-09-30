@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Calendar} from "react-native-calendars";
-import NewTaskPopup from "../components/NewTaskPopup";
+import NewTaskPopup from "../Components/NewTaskPopup";
 
 const CalendarScreen = () => {
     const [selected, setSelected] = useState('');
@@ -19,6 +19,7 @@ const CalendarScreen = () => {
 
     const handleAddTask = (taskText) => {
         // Implement logic to add the task to the selected date.
+        console.log(taskText)
     };
     return (
         <View style={styles.container}>
