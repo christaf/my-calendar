@@ -1,21 +1,27 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Pressable} from 'react-native';
+import {View, Text, Button, StyleSheet, Pressable} from 'react-native';
 import {Input, Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 
-const LoginScreen = ({onLogin}) => {
+const LoginScreen = (props) => {
+    const {onLogin} = props;
     const navigation = useNavigation();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const handleLogin = () => {
         if (email === 'admin' && password === 'admin') {
             console.log('Login successful ls')
             onLogin(true)
-        } else if (email === 'admin' && password !== 'admin') {
+        } else {
             console.log('Login failed ls')
+            alert('Wrong credentials. Please try again')
             onLogin(false)
         }
     };
+    const handleRegister = () => {
+        navigation.navigate('Register')
+    }
 
 
     return (
@@ -34,7 +40,7 @@ const LoginScreen = ({onLogin}) => {
             />
             <Button title="Zaloguj się" onPress={() => handleLogin()}/>
 
-            <Pressable onPress={() => navigation.navigate('Rejestracja')}>
+            <Pressable onPress={() => handleRegister()}>
                 <Text style={styles.signupText}>Nie masz konta? Zarejestruj się</Text>
             </Pressable>
         </View>
