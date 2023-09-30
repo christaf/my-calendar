@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {View, Text, TextInput, FlatList, StyleSheet, Pressable} from 'react-native';
+import {View, Text, TextInput, FlatList, StyleSheet, Button} from 'react-native';
 
 const TaskScreen = () => {
     const [tasks, setTasks] = useState([]);
@@ -29,12 +29,12 @@ const TaskScreen = () => {
                 value={newTask}
                 onChangeText={(text) => setNewTask(text)}
             />
-            <Pressable title="Dodaj zadanie" onPress={addTask} />
+            <Button title="Dodaj zadanie" onPress={addTask} />
             <FlatList
                 data={tasks}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <Pressable
+                    <Button
                         onPress={() => toggleTask(item.id)}
                         style={[
                             styles.taskItem,
@@ -48,7 +48,7 @@ const TaskScreen = () => {
                         >
                             {item.text}
                         </Text>
-                    </Pressable>
+                    </Button>
                 )}
             />
         </View>
