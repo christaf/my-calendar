@@ -3,6 +3,8 @@ module.exports = function (api) {
     return {
         presets: ['babel-preset-expo'],
         plugins: [
+            '@babel/plugin-proposal-export-namespace-from',
+            '@babel/plugin-proposal-class-properties',
             "react-native-reanimated/plugin",
         ],
     };

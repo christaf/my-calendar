@@ -8,7 +8,8 @@ import LoginScreen from './pages/LoginScreen'; // Import LoginScreen
 import TaskScreen from './pages/TaskScreen'; // Import TaskScreen
 import CalendarScreen from './pages/CalendarScreen'; // Import CalendarScreen
 import ProfileScreen from './pages/ProfileScreen'; // Import ProfileScreen
-import GoalsScreen from './pages/GoalsScreen'; // Import GoalsScreen
+import GoalsScreen from './pages/GoalsScreen';
+import RegisterScreen from "./pages/RegisterScreen"; // Import GoalsScreen
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -17,23 +18,24 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const handleLogin = (result) => {
         setLoggedIn(result)
-        if (!result) {
-            alert('Wrong credentials. Please try again')
-            navigator.navigate('Login')
-        }
     };
     return (
         <NavigationContainer>
             {loggedIn ? (
                 <Drawer.Navigator initialRouteName="TaskScreen">
-                    <Drawer.Screen name="TaskScreen" component={TaskScreen}/>
-                    <Drawer.Screen name="CalendarScreen" component={CalendarScreen}/>
-                    <Drawer.Screen name="ProfileScreen" component={ProfileScreen}/>
-                    <Drawer.Screen name="GoalsScreen" component={GoalsScreen}/>
+                    <Drawer.Screen name="Tasks" component={TaskScreen}/>
+                    <Drawer.Screen name="Calendar" component={CalendarScreen}/>
+                    <Drawer.Screen name="Profile" component={ProfileScreen}/>
+                    <Drawer.Screen name="Goals" component={GoalsScreen}/>
                 </Drawer.Navigator>
             ) : (
-                <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
-                    <Stack.Screen name="Login" component={() => <LoginScreen onLogin={handleLogin}/>}/>
+                <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="Login">
+                        {() => <LoginScreen onLogin={handleLogin} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="Register">
+                        {() => <RegisterScreen onLogin={handleLogin} />}
+                    </Stack.Screen>
                 </Stack.Navigator>
 
             )}
