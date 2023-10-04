@@ -1,15 +1,38 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, FlatList, StyleSheet, Button} from 'react-native';
+import {CheckBox} from "react-native-web";
+import TaskDetailModal from "../Components/TaskDetailModal";
 
 const TaskScreen = () => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
+    const [selectedTask, setSelectedTask] = useState(null);
+    const [dueDate, setDueDate] = useState(null);
 
     const addTask = () => {
-        if (newTask.trim() !== '') {
-            setTasks([...tasks, {text: newTask, id: Date.now(), done: false}]);
-            setNewTask('');
+        if (newTask.trim() === '') {
+            return;
         }
+        let currentDate;
+        if (dueDate) {
+            let day = dueDate.getDate();
+            let month = dueDate.getMonth() + 1;
+            let year = dueDate.getFullYear();
+
+            currentDate = `${day}-${month}-${year}`;
+        } else {
+            currentDate = "no due date"
+        }
+        const task = {
+            id: Math.random().toString(),
+            text: newTask,
+            done: false,
+            dueDate: currentDate,
+        };
+
+        setTasks([...tasks, task]);
+        setNewTask('');
+        setDueDate(null);
     };
 
     const toggleTask = (taskId) => {
@@ -30,35 +53,61 @@ const TaskScreen = () => {
                 onChangeText={(text) => setNewTask(text)}
             />
             <Button title="Dodaj zadanie" onPress={addTask}/>
-            <div>
-                <br/>
-            </div>
+            <View style={{marginBottom: 10}}>
+                {newTask.trim() !== '' && (
+                    <Button
+                        title="Wybierz datę"
+                        onPress={() => {
+                            setDueDate(new Date());
+                        }}
+                    />
+                )}
+            </View>
             <FlatList
                 data={tasks}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({item}) => (
-                    <>
-                        <Button
-                            onPress={() => toggleTask(item.id)}
-                            style={[
-                                styles.taskItem,
-                                {backgroundColor: item.done ? 'lightgray' : 'white'},
-                            ]}
-                            title={item.text}>
+                    <View style={styles.taskItem}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <CheckBox
+                                value={item.done}
+                                onValueChange={() => toggleTask(item.id)}
+                            />
                             <Text
                                 style={{
+                                    marginLeft: 8,
                                     textDecorationLine: item.done ? 'line-through' : 'none',
                                 }}
                             >
                                 {item.text}
                             </Text>
-                        </Button>
-
-                    </>
-
+                            <View style={{marginLeft: 10}}>
+                                <Button
+                                    title="Details"
+                                    onPress={() => setSelectedTask(item)}
+                                />
+                            </View>
+                            <View style={{marginLeft: 10}}>
+                                <Button
+                                    title="Usuń"
+                                    onPress={() =>
+                                        setTasks(tasks.filter((task) => task.id !== item.id))
+                                    }
+                                />
+                            </View>
+                        </View>
+                    </View>
                 )}
             />
+            {selectedTask && (
+                <TaskDetailModal
+                    task={selectedTask}
+                    visible={!!selectedTask}
+                    onClose={() => setSelectedTask(null)}
+                />
+            )}
         </View>
+
     );
 };
 
@@ -83,6 +132,7 @@ const styles = StyleSheet.create({
     taskItem: {
         padding: 12,
         marginVertical: 4,
+        marginHorizontal: 8,
         borderRadius: 5,
     },
 });
