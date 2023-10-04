@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, FlatList, StyleSheet, Button} from 'react-native';
 import {CheckBox} from "react-native-web";
 import TaskDetailModal from "../Components/TaskDetailModal";
 
 const TaskScreen = () => {
+    //TODO use context to store tasks
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
     const [selectedTask, setSelectedTask] = useState(null);
