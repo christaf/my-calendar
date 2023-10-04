@@ -8,8 +8,9 @@ import LoginScreen from './pages/LoginScreen'; // Import LoginScreen
 import TaskScreen from './pages/TaskScreen'; // Import TaskScreen
 import CalendarScreen from './pages/CalendarScreen'; // Import CalendarScreen
 import ProfileScreen from './pages/ProfileScreen'; // Import ProfileScreen
-import GoalsScreen from './pages/GoalsScreen';
-import RegisterScreen from "./pages/RegisterScreen"; // Import GoalsScreen
+import HabitScreen from './pages/HabitScreen';
+import RegisterScreen from "./pages/RegisterScreen";
+import CustomDrawerContent from "./components/ui/CustomDrawerContent"; // Import GoalsScreen
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -19,22 +20,29 @@ function App() {
     const handleLogin = (result) => {
         setLoggedIn(result)
     };
+
+    const handleLogout = () => {
+        setLoggedIn(false)
+    }
+
     return (
         <NavigationContainer>
             {loggedIn ? (
-                <Drawer.Navigator initialRouteName="TaskScreen">
+                <Drawer.Navigator initialRouteName="Logged" drawerContent={(props) => (
+                    <CustomDrawerContent {...props} onLogout={handleLogout}/>
+                )}>
                     <Drawer.Screen name="Tasks" component={TaskScreen}/>
                     <Drawer.Screen name="Calendar" component={CalendarScreen}/>
                     <Drawer.Screen name="Profile" component={ProfileScreen}/>
-                    <Drawer.Screen name="Goals" component={GoalsScreen}/>
+                    <Drawer.Screen name="Habits" component={HabitScreen}/>
                 </Drawer.Navigator>
             ) : (
-                <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+                <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
                     <Stack.Screen name="Login">
-                        {() => <LoginScreen onLogin={handleLogin} />}
+                        {() => <LoginScreen onLogin={handleLogin}/>}
                     </Stack.Screen>
                     <Stack.Screen name="Register">
-                        {() => <RegisterScreen onLogin={handleLogin} />}
+                        {() => <RegisterScreen/>}
                     </Stack.Screen>
                 </Stack.Navigator>
 

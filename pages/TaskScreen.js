@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, FlatList, StyleSheet, Button} from 'react-native';
 
 const TaskScreen = () => {
@@ -7,7 +7,7 @@ const TaskScreen = () => {
 
     const addTask = () => {
         if (newTask.trim() !== '') {
-            setTasks([...tasks, { text: newTask, id: Date.now(), done: false }]);
+            setTasks([...tasks, {text: newTask, id: Date.now(), done: false}]);
             setNewTask('');
         }
     };
@@ -15,7 +15,7 @@ const TaskScreen = () => {
     const toggleTask = (taskId) => {
         setTasks((prevTasks) =>
             prevTasks.map((task) =>
-                task.id === taskId ? { ...task, done: !task.done } : task
+                task.id === taskId ? {...task, done: !task.done} : task
             )
         );
     };
@@ -29,26 +29,33 @@ const TaskScreen = () => {
                 value={newTask}
                 onChangeText={(text) => setNewTask(text)}
             />
-            <Button title="Dodaj zadanie" onPress={addTask} />
+            <Button title="Dodaj zadanie" onPress={addTask}/>
+            <div>
+                <br/>
+            </div>
             <FlatList
                 data={tasks}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <Button
-                        onPress={() => toggleTask(item.id)}
-                        style={[
-                            styles.taskItem,
-                            { backgroundColor: item.done ? 'lightgray' : 'white' },
-                        ]}
-                    >
-                        <Text
-                            style={{
-                                textDecorationLine: item.done ? 'line-through' : 'none',
-                            }}
-                        >
-                            {item.text}
-                        </Text>
-                    </Button>
+                renderItem={({item}) => (
+                    <>
+                        <Button
+                            onPress={() => toggleTask(item.id)}
+                            style={[
+                                styles.taskItem,
+                                {backgroundColor: item.done ? 'lightgray' : 'white'},
+                            ]}
+                            title={item.text}>
+                            <Text
+                                style={{
+                                    textDecorationLine: item.done ? 'line-through' : 'none',
+                                }}
+                            >
+                                {item.text}
+                            </Text>
+                        </Button>
+
+                    </>
+
                 )}
             />
         </View>
