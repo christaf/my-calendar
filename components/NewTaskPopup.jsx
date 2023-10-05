@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Modal } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TextInput, Button, Modal, StyleSheet} from 'react-native';
 
-const NewTaskPopup = ({ visible, onClose, onAddTask }) => {
+const NewTaskPopup = ({visible, onClose, onAddTask}) => {
     const [taskText, setTaskText] = useState('');
 
     const handleAddTask = () => {
@@ -13,18 +13,41 @@ const NewTaskPopup = ({ visible, onClose, onAddTask }) => {
 
     return (
         <Modal visible={visible} animationType="slide">
-            <View>
-                <Text>Add New Task</Text>
+            <View style={styles.container}>
+                <Text style={styles.title}>Add New Task</Text>
                 <TextInput
+                    style={styles.input}
                     placeholder="Task name"
                     value={taskText}
                     onChangeText={(text) => setTaskText(text)}
                 />
-                <Button title="Add Task" onPress={handleAddTask} />
-                <Button title="Cancel" onPress={onClose} />
+                <Button title="Add Task" onPress={handleAddTask}/>
+                <Button title="Cancel" onPress={onClose}/>
             </View>
         </Modal>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: 'white', // Background color
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    input: {
+        width: '100%',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        marginBottom: 20,
+    }
+});
 
 export default NewTaskPopup;
