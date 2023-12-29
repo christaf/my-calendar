@@ -1,23 +1,23 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Input, Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
+import {MyButton} from '../components/ui/Button';
 
 const RegisterScreen = () => {
     const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const handleRegister = () => {
         if (email === 'admin' && password === 'admin') {
-            navigation.navigate('Login')
-            console.log('Register successful ls')
+            alert('Register successful');
+            navigation.navigate('Login');
         } else {
-            console.log('Register failed ls')
-            alert('Wrong credentials. Please try again')
+            alert('Wrong credentials. Please try again');
         }
     };
-
 
     return (
         <View style={styles.container}>
@@ -33,8 +33,13 @@ const RegisterScreen = () => {
                 leftIcon={<Icon name="lock" size={24} color="black"/>}
                 onChangeText={(text) => setPassword(text)}
             />
-            <Button title="Zarejestruj się" onPress={() => handleRegister()}/>
 
+            <MyButton title="Zarejestruj się" onPress={() => handleRegister()}/>
+            <MyButton
+                title="Wróć"
+                onPress={() => navigation.goBack()}
+                buttonStyle={{marginTop: 10}}
+            />
         </View>
     );
 };

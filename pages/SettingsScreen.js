@@ -1,20 +1,19 @@
 import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
-// import { useSettings } from '../contexts/SettingsContext'; // Import useSettings
+import { useSettings } from '../contexts/SettingsContext'; // Import useSettings
 
 const SettingsScreen = () => {
-    // const { darkMode, toggleDarkMode } = useSettings(); // Access settings and functions from the context
-
+    const { darkMode, toggleDarkMode } = useSettings();
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Settings Screen</Text>
             <View style={styles.settingItem}>
                 <Text style={styles.settingLabel}>Dark Mode</Text>
                 <Switch
-                    // value={darkMode}
-                    // onValueChange={toggleDarkMode}
+                    value={darkMode}
+                    onValueChange={toggleDarkMode}
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
-                    // thumbColor={darkMode ? "#f5dd4b" : "#f4f3f4"}
+                    thumbColor={darkMode ? "#f5dd4b" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                 />
             </View>

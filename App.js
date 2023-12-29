@@ -10,6 +10,8 @@ import CalendarScreen from './pages/CalendarScreen'; // Import CalendarScreen
 import ProfileScreen from './pages/ProfileScreen'; // Import ProfileScreen
 import HabitScreen from './pages/HabitScreen';
 import RegisterScreen from "./pages/RegisterScreen";
+import StatisticsScreen from "./pages/StatisticsScreen";
+
 import CustomDrawerContent from "./components/ui/CustomDrawerContent";
 import {SettingsProvider, useSettings} from "./contexts/SettingsContext";
 import SettingsScreen from "./pages/SettingsScreen";
@@ -18,9 +20,9 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function App() {
-    // const {darkMode} = useSettings();
-    // console.log(darkMode)
     const [loggedIn, setLoggedIn] = useState(false);
+    const settingsContext = useSettings();
+    const {darkMode, toggleDarkMode} = settingsContext;
     const handleLogin = (result) => {
         setLoggedIn(result)
     };
@@ -31,9 +33,8 @@ function App() {
 
     return (
 
-        // <SettingsProvider>
+        <SettingsProvider>
             <NavigationContainer>
-                {/*<div  style={{backgroundColor: darkMode ? 'black' : 'white'}}></div>*/}
                 {loggedIn ? (
                     <Drawer.Navigator initialRouteName="Logged" drawerContent={(props) => (
                         <CustomDrawerContent {...props} onLogout={handleLogout}/>
@@ -43,6 +44,7 @@ function App() {
                         <Drawer.Screen name="Profile" component={ProfileScreen}/>
                         <Drawer.Screen name="Habits" component={HabitScreen}/>
                         <Drawer.Screen name={'Settings'} component={SettingsScreen}/>
+                        <Drawer.Screen name={"Statistics"} component={StatisticsScreen}/>
                     </Drawer.Navigator>
                 ) : (
                     <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
@@ -57,7 +59,7 @@ function App() {
                 )}
             </NavigationContainer>
 
-        // </SettingsProvider>
+         </SettingsProvider>
     );
 
 }

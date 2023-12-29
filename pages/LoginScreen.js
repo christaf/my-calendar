@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, Button, StyleSheet, Pressable} from 'react-native';
 import {Input, Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
+import {MyButton} from "../Components/ui/Button";
 
 const LoginScreen = (props) => {
     const {onLogin} = props;
@@ -38,7 +39,7 @@ const LoginScreen = (props) => {
                 leftIcon={<Icon name="lock" size={24} color="black"/>}
                 onChangeText={(text) => setPassword(text)}
             />
-            <Button title="Zaloguj się" onPress={() => handleLogin()}/>
+            <MyButton title="Zaloguj się" onPress={() => handleLogin()}/>
 
             <Pressable onPress={() => handleRegister()}>
                 <Text style={styles.signupText}>Nie masz konta? Zarejestruj się</Text>
