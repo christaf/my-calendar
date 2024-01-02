@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import { useSettings } from '../contexts/SettingsContext'; // Import useSettings
 
-const SettingsScreen = () => {
+const SettingsScreen: React.FC = () => {
     const { darkMode, toggleDarkMode } = useSettings();
     return (
         <View style={styles.container}>

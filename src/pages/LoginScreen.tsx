@@ -3,10 +3,18 @@ import {View, Text, Button, StyleSheet, Pressable} from 'react-native';
 import {Input, Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {MyButton} from "../Components/ui/Button";
+import {DrawerNavigationProp} from "@react-navigation/drawer";
+import {DrawerParamList} from "../App";
 
-const LoginScreen = (props) => {
-    const {onLogin} = props;
-    const navigation = useNavigation();
+type LoginScreenProps = DrawerNavigationProp<DrawerParamList>
+
+interface LoginProps {
+    onLogin: (result: boolean) => void;
+}
+
+const LoginScreen : React.FC<LoginProps> = ({onLogin}) => {
+
+    const navigation = useNavigation<LoginScreenProps>();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +29,7 @@ const LoginScreen = (props) => {
         }
     };
     const handleRegister = () => {
-        navigation.navigate('Register')
+        navigation.navigate('Register' as never)
     }
 
 

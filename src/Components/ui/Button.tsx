@@ -1,10 +1,18 @@
 import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, StyleProp, ViewStyle } from 'react-native';
 import { useSettings } from '../../contexts/SettingsContext';
 
-export function MyButton({ title, onPress, style, children }) {
+interface MyButtonProps {
+    title?: string;
+    onPress?: () => void;
+    style?: StyleProp<ViewStyle> | undefined;
+    children?: React.ReactNode;
+}
+
+export function MyButton({ title, onPress, style, children }: MyButtonProps) {
     const { darkMode } = useSettings();
-    const buttonStyle = darkMode ? styles.buttonDark : styles.buttonLight;
+    const buttonStyle: any = darkMode ? styles.buttonDark : styles.buttonLight;
+
     return (
         <TouchableOpacity style={[buttonStyle, style]} onPress={onPress}>
             {children || <Text style={styles.buttonText}>{title}</Text>}
@@ -28,6 +36,5 @@ const styles = {
     buttonText: {
         color: 'white',
         fontSize: 16,
-        fontWeight: 'bold',
     },
 };

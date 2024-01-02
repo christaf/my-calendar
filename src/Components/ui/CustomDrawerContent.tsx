@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native';
 import {DrawerContentScrollView, DrawerItemList} from '@react-navigation/drawer';
 
-const CustomDrawerContent = (props) => {
+const CustomDrawerContent = (props: any) => {
     const {onLogout} = props;
     const handleLogout = () => {
         onLogout();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, Modal } from 'react-native';
 
-function TaskDetailModal({ task, visible, onClose }) {
+function TaskDetailModal({ task, visible, onClose }: any) {
     return (
         <Modal visible={visible} animationType="slide" transparent={true}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

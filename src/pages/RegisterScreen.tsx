@@ -2,10 +2,20 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {Input, Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import {MyButton} from '../components/ui/Button';
+import {MyButton} from '../Components/ui/Button';
+import {DrawerNavigationProp} from "@react-navigation/drawer";
+import {DrawerParamList} from "../App";
 
-const RegisterScreen = () => {
-    const navigation = useNavigation();
+type RegisterScreenProps = DrawerNavigationProp<DrawerParamList>
+
+interface RegisterProps {
+
+    goBack: () => void;
+    navigate: (screen: string) => void;
+}
+
+const RegisterScreen: React.FC<RegisterProps> = () => {
+    const navigation = useNavigation<RegisterProps>();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -38,7 +48,6 @@ const RegisterScreen = () => {
             <MyButton
                 title="Wróć"
                 onPress={() => navigation.goBack()}
-                buttonStyle={{marginTop: 10}}
             />
         </View>
     );
@@ -52,7 +61,6 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
         marginBottom: 16,
         textAlign: 'center',
     },

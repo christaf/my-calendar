@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, Button, Modal, StyleSheet} from 'react-native';
 
-const NewTaskPopup = ({visible, onClose, onAddTask}) => {
+const NewTaskPopup = ({visible, onClose, onAddTask}: any) => {
     const [taskText, setTaskText] = useState('');
 
     const handleAddTask = () => {
