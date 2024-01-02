@@ -17,7 +17,7 @@ const ProfileScreen = () => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image
-                    source={require('../assets/icon.png')} // Replace with the actual path to the user's profile picture
+                    source={require('../../assets/icon.png')} // Replace with the actual path to the user's profile picture
                     style={styles.profilePicture}
                 />
                 <View style={styles.userInfo}>

@@ -8,7 +8,7 @@ const CalendarScreen = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-    const handleDayPress = (day) => {
+    const handleDayPress = (day: any) => {
         setSelectedDate(day.dateString);
         setIsPopupVisible(true);
     };
@@ -17,7 +17,7 @@ const CalendarScreen = () => {
         setIsPopupVisible(false);
     };
 
-    const handleAddTask = (taskText) => {
+    const handleAddTask = (taskText: string) => {
         // Implement logic to add the task to the selected date.
         console.log(taskText)
     };
@@ -30,7 +30,7 @@ const CalendarScreen = () => {
                     handleDayPress(day)
                 }}
                 markedDates={{
-                    [selected]: {selected: true, disableTouchEvent: true, selectedDotColor: 'orange'}
+                    [selected]: {selected: true, disableTouchEvent: true, selectedColor: 'orange'}
                 }}
             />
             <NewTaskPopup visible={isPopupVisible} onAddTask={handleAddTask} onClose={handleClosePopup}/>

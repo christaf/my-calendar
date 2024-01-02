@@ -9,7 +9,7 @@ export const useSettings = () => {
     return useContext(SettingsContext);
 };
 
-export const SettingsProvider = ({ children }) => {
+export const SettingsProvider = ({ children }: any) => {
 
     //TODO store somewhere darkMode
     const [darkMode, setDarkMode] = useState(false);

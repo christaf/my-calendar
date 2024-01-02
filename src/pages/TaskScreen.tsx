@@ -1,30 +1,38 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, FlatList, StyleSheet, Button} from 'react-native';
-import {CheckBox} from "react-native-web";
-import TaskDetailModal from "../Components/TaskDetailModal";
+import React, { useState } from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+    FlatList,
+    StyleSheet,
+    Button,
+} from 'react-native';
+import TaskDetailModal from '../Components/TaskDetailModal';
+import {CheckBox} from "react-native-elements";
 
-const TaskScreen = () => {
-    //TODO use context to store tasks
-    const [tasks, setTasks] = useState([]);
+interface Task {
+    id: string;
+    text: string;
+    done?: boolean;
+    dueDate: string | null;
+}
+
+const TaskScreen: React.FC = () => {
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [newTask, setNewTask] = useState('');
-    const [selectedTask, setSelectedTask] = useState(null);
-    const [dueDate, setDueDate] = useState(null);
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [dueDate, setDueDate] = useState<Date | null>(null);
 
     const addTask = () => {
         if (newTask.trim() === '') {
             return;
         }
-        let currentDate;
-        if (dueDate) {
-            let day = dueDate.getDate();
-            let month = dueDate.getMonth() + 1;
-            let year = dueDate.getFullYear();
 
-            currentDate = `${day}-${month}-${year}`;
-        } else {
-            currentDate = "no due date"
-        }
-        const task = {
+        const currentDate = dueDate
+            ? `${dueDate.getDate()}-${dueDate.getMonth() + 1}-${dueDate.getFullYear()}`
+            : 'no due date';
+
+        const task: Task = {
             id: Math.random().toString(),
             text: newTask,
             done: false,
@@ -36,10 +44,10 @@ const TaskScreen = () => {
         setDueDate(null);
     };
 
-    const toggleTask = (taskId) => {
+    const toggleTask = (taskId: string) => {
         setTasks((prevTasks) =>
             prevTasks.map((task) =>
-                task.id === taskId ? {...task, done: !task.done} : task
+                task.id === taskId ? { ...task, done: !task.done } : task
             )
         );
     };
@@ -53,8 +61,8 @@ const TaskScreen = () => {
                 value={newTask}
                 onChangeText={(text) => setNewTask(text)}
             />
-            <Button title="Dodaj zadanie" onPress={addTask}/>
-            <View style={{marginBottom: 10}}>
+            <Button title="Dodaj zadanie" onPress={addTask} />
+            <View style={{ marginBottom: 10 }}>
                 {newTask.trim() !== '' && (
                     <Button
                         title="Wybierz datę"
@@ -67,12 +75,12 @@ const TaskScreen = () => {
             <FlatList
                 data={tasks}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                     <View style={styles.taskItem}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <CheckBox
-                                value={item.done}
-                                onValueChange={() => toggleTask(item.id)}
+                                checked={item.done}
+                                onIconPress={() => toggleTask(item.id)}
                             />
                             <Text
                                 style={{
@@ -82,13 +90,13 @@ const TaskScreen = () => {
                             >
                                 {item.text}
                             </Text>
-                            <View style={{marginLeft: 10}}>
+                            <View style={{ marginLeft: 10 }}>
                                 <Button
                                     title="Details"
                                     onPress={() => setSelectedTask(item)}
                                 />
                             </View>
-                            <View style={{marginLeft: 10}}>
+                            <View style={{ marginLeft: 10 }}>
                                 <Button
                                     title="Usuń"
                                     onPress={() =>
@@ -108,7 +116,6 @@ const TaskScreen = () => {
                 />
             )}
         </View>
-
     );
 };
 

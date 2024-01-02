@@ -16,7 +16,7 @@ const HabitScreen = () => {
         },
     ]);
 
-    const toggleSettings = (habitId) => {
+    const toggleSettings = (habitId: number) => {
         console.log(`Settings for Habit ${habitId} clicked`);
     };
 

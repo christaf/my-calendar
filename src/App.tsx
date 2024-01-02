@@ -12,18 +12,34 @@ import HabitScreen from './pages/HabitScreen';
 import RegisterScreen from "./pages/RegisterScreen";
 import StatisticsScreen from "./pages/StatisticsScreen";
 
-import CustomDrawerContent from "./components/ui/CustomDrawerContent";
+import CustomDrawerContent from "./Components/ui/CustomDrawerContent";
 import {SettingsProvider, useSettings} from "./contexts/SettingsContext";
 import SettingsScreen from "./pages/SettingsScreen";
 
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+export type RootStackParamList = {
+    Login: undefined;
+    Register: undefined;
+}
+
+export type DrawerParamList = {
+    Tasks: undefined;
+    Logged?: undefined;
+    Calendar: undefined;
+    Profile: undefined;
+    Habits: undefined;
+    Settings: undefined;
+    Statistics: undefined;
+
+}
+
+const Stack = createStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const settingsContext = useSettings();
     const {darkMode, toggleDarkMode} = settingsContext;
-    const handleLogin = (result) => {
+    const handleLogin = (result: any) => {
         setLoggedIn(result)
     };
 
@@ -59,7 +75,7 @@ function App() {
                 )}
             </NavigationContainer>
 
-         </SettingsProvider>
+        </SettingsProvider>
     );
 
 }
