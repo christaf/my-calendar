@@ -11,7 +11,6 @@ export const useSettings = () => {
 
 export const SettingsProvider = ({ children }: any) => {
 
-    //TODO store somewhere darkMode
     const [darkMode, setDarkMode] = useState(false);
 
     const toggleDarkMode = () => {

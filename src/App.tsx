@@ -14,6 +14,7 @@ import StatisticsScreen from "./pages/StatisticsScreen";
 
 import CustomDrawerContent from "./Components/ui/CustomDrawerContent";
 import {SettingsProvider, useSettings} from "./contexts/SettingsContext";
+import {TaskProvider} from "./contexts/TaskContext";
 import SettingsScreen from "./pages/SettingsScreen";
 
 export type RootStackParamList = {
@@ -50,6 +51,7 @@ function App() {
     return (
 
         <SettingsProvider>
+            <TaskProvider>
             <NavigationContainer>
                 {loggedIn ? (
                     <Drawer.Navigator initialRouteName="Logged" drawerContent={(props) => (
@@ -74,7 +76,7 @@ function App() {
 
                 )}
             </NavigationContainer>
-
+            </TaskProvider>
         </SettingsProvider>
     );
 

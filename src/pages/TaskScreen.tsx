@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import TaskDetailModal from '../Components/TaskDetailModal';
 import {CheckBox} from "react-native-elements";
+import {useTaskContext} from "../contexts/TaskContext";
 
 interface Task {
     id: string;
@@ -23,6 +24,8 @@ const TaskScreen: React.FC = () => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [dueDate, setDueDate] = useState<Date | null>(null);
 
+    const {tasksTable} = useTaskContext()
+    
     const addTask = () => {
         if (newTask.trim() === '') {
             return;
