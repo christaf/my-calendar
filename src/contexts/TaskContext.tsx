@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {createContext, useContext, useState, ReactNode, useEffect} from 'react';
 
 interface Task {
     id: string;
@@ -6,16 +6,28 @@ interface Task {
     done?: boolean;
     dueDate: string | null;
 }
+
 interface TaskContextProps {
     tasksTable: Task[];
-    addTask: (task: Task) => void;
-    removeTask: (task: Task) => void;
+    addTaskContext: (task: Task) => void;
+    removeTaskContext: (task: Task) => void;
+    removeTaskContextById: (id: string) => void;
+    toggleTask: (task: Task) => void;
+    toggleTaskById: (id: string) => void;
 }
 
 const TaskContext = createContext<TaskContextProps>({
     tasksTable: [],
-    addTask: () => {},
-    removeTask: () => {},
+    addTaskContext: () => {
+    },
+    removeTaskContext: () => {
+    },
+    removeTaskContextById: () => {
+    },
+    toggleTask: () => {
+    },
+    toggleTaskById: () => {
+    }
 });
 
 export const useTaskContext = () => useContext(TaskContext);
@@ -24,21 +36,53 @@ interface TaskProviderProps {
     children: ReactNode;
 }
 
-export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
+export const TaskProvider: React.FC<TaskProviderProps> = ({children}) => {
     const [tasksTable, setTasksTable] = useState<Task[]>([]);
 
-    const addTask = (task: Task) => {
+    const addTaskContext = (task: Task) => {
         setTasksTable([...tasksTable, task]);
-        console.log(tasksTable)
     };
 
-    const removeTask = (task: Task) => {
+    const removeTaskContext = (task: Task) => {
         setTasksTable(tasksTable.filter((t) => t !== task));
-        console.log(tasksTable)
     };
+
+    const removeTaskContextById = (id: string) => {
+        const task = tasksTable.find((t) => t.id === id);
+        if (task) {
+            removeTaskContext(task)
+        }
+    }
+
+    const toggleTask = (task: Task) => {
+        setTasksTable((prevTasks) =>
+            prevTasks.map((t) =>
+                t.id === task.id ? {...t, done: !t.done} : t
+            )
+        );
+    }
+
+    const toggleTaskById = (id: string) => {
+        const task = tasksTable.find((t) => t.id === id);
+        if (task) {
+            toggleTask(task)
+        }
+    }
+
+    useEffect(() => {
+        console.log(tasksTable)
+    }, [tasksTable])
 
     return (
-        <TaskContext.Provider value={{ tasksTable: tasksTable, addTask, removeTask }}>
+        <TaskContext.Provider
+            value={{
+                tasksTable: tasksTable,
+                addTaskContext: addTaskContext,
+                removeTaskContext: removeTaskContext,
+                removeTaskContextById: removeTaskContextById,
+                toggleTask: toggleTask,
+                toggleTaskById: toggleTaskById
+            }}>
             {children}
         </TaskContext.Provider>
     );

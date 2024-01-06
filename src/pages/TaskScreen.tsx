@@ -24,8 +24,8 @@ const TaskScreen: React.FC = () => {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [dueDate, setDueDate] = useState<Date | null>(null);
 
-    const {tasksTable} = useTaskContext()
-    
+    const {tasksTable, addTaskContext, removeTaskContextById, toggleTaskById} = useTaskContext()
+
     const addTask = () => {
         if (newTask.trim() === '') {
             return;
@@ -42,17 +42,9 @@ const TaskScreen: React.FC = () => {
             dueDate: currentDate,
         };
 
-        setTasks([...tasks, task]);
         setNewTask('');
         setDueDate(null);
-    };
-
-    const toggleTask = (taskId: string) => {
-        setTasks((prevTasks) =>
-            prevTasks.map((task) =>
-                task.id === taskId ? { ...task, done: !task.done } : task
-            )
-        );
+        addTaskContext(task)
     };
 
     return (
@@ -76,14 +68,14 @@ const TaskScreen: React.FC = () => {
                 )}
             </View>
             <FlatList
-                data={tasks}
+                data={tasksTable}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <View style={styles.taskItem}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <CheckBox
                                 checked={item.done}
-                                onIconPress={() => toggleTask(item.id)}
+                                onIconPress={() => toggleTaskById(item.id)}
                             />
                             <Text
                                 style={{
@@ -103,7 +95,7 @@ const TaskScreen: React.FC = () => {
                                 <Button
                                     title="Usuń"
                                     onPress={() =>
-                                        setTasks(tasks.filter((task) => task.id !== item.id))
+                                        removeTaskContextById(item.id)
                                     }
                                 />
                             </View>
