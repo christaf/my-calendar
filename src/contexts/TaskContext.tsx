@@ -5,6 +5,11 @@ interface Task {
     text: string;
     done?: boolean;
     dueDate: string | null;
+    repeatable?: boolean;
+    repetitionTime?: string; // e.g., 'daily', 'weekly', 'monthly', etc.
+    creationDate: string;
+    priority?: 'low' | 'medium' | 'high';
+    // Add other properties as needed
 }
 
 interface TaskContextProps {

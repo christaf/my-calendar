@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     View,
     Text,
@@ -16,10 +16,13 @@ interface Task {
     text: string;
     done?: boolean;
     dueDate: string | null;
+    repeatable?: boolean;
+    repetitionTime?: string; // e.g., 'daily', 'weekly', 'monthly', etc.
+    creationDate: string;
+    priority?: 'low' | 'medium' | 'high';
 }
 
 const TaskScreen: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>([]);
     const [newTask, setNewTask] = useState('');
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [dueDate, setDueDate] = useState<Date | null>(null);
@@ -36,10 +39,11 @@ const TaskScreen: React.FC = () => {
             : 'no due date';
 
         const task: Task = {
+            creationDate: "", priority: undefined, repeatable: false, repetitionTime: "",
             id: Math.random().toString(),
             text: newTask,
             done: false,
-            dueDate: currentDate,
+            dueDate: currentDate
         };
 
         setNewTask('');
@@ -56,8 +60,8 @@ const TaskScreen: React.FC = () => {
                 value={newTask}
                 onChangeText={(text) => setNewTask(text)}
             />
-            <Button title="Dodaj zadanie" onPress={addTask} />
-            <View style={{ marginBottom: 10 }}>
+            <Button title="Dodaj zadanie" onPress={addTask}/>
+            <View style={{marginBottom: 10}}>
                 {newTask.trim() !== '' && (
                     <Button
                         title="Wybierz datę"
@@ -70,9 +74,9 @@ const TaskScreen: React.FC = () => {
             <FlatList
                 data={tasksTable}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <View style={styles.taskItem}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <CheckBox
                                 checked={item.done}
                                 onIconPress={() => toggleTaskById(item.id)}
@@ -85,13 +89,13 @@ const TaskScreen: React.FC = () => {
                             >
                                 {item.text}
                             </Text>
-                            <View style={{ marginLeft: 10 }}>
+                            <View style={{marginLeft: 10}}>
                                 <Button
                                     title="Details"
                                     onPress={() => setSelectedTask(item)}
                                 />
                             </View>
-                            <View style={{ marginLeft: 10 }}>
+                            <View style={{marginLeft: 10}}>
                                 <Button
                                     title="Usuń"
                                     onPress={() =>
