@@ -1,0 +1,14 @@
+{
+  "APP": {
+    "PORT": "8800",
+    "SESSION": {
+      "SECRET": "money"
+    }
+  },
+  "DATABASE": {
+    "HOST": "localhost",
+    "DATABASE": "money",
+    "USER": "root",
+    "PASS": "password"
+  }
+}
