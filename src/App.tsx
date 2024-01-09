@@ -52,30 +52,30 @@ function App() {
 
         <SettingsProvider>
             <TaskProvider>
-            <NavigationContainer>
-                {loggedIn ? (
-                    <Drawer.Navigator initialRouteName="Logged" drawerContent={(props) => (
-                        <CustomDrawerContent {...props} onLogout={handleLogout}/>
-                    )}>
-                        <Drawer.Screen name="Tasks" component={TaskScreen}/>
-                        <Drawer.Screen name="Calendar" component={CalendarScreen}/>
-                        <Drawer.Screen name="Profile" component={ProfileScreen}/>
-                        <Drawer.Screen name="Habits" component={HabitScreen}/>
-                        <Drawer.Screen name={'Settings'} component={SettingsScreen}/>
-                        <Drawer.Screen name={"Statistics"} component={StatisticsScreen}/>
-                    </Drawer.Navigator>
-                ) : (
-                    <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
-                        <Stack.Screen name="Login">
-                            {() => <LoginScreen onLogin={handleLogin}/>}
-                        </Stack.Screen>
-                        <Stack.Screen name="Register">
-                            {() => <RegisterScreen/>}
-                        </Stack.Screen>
-                    </Stack.Navigator>
+                <NavigationContainer>
+                    {loggedIn ? (
+                        <Drawer.Navigator initialRouteName="Logged" drawerContent={(props) => (
+                            <CustomDrawerContent {...props} onLogout={handleLogout}/>
+                        )}>
+                            <Drawer.Screen name="Tasks" component={TaskScreen}/>
+                            <Drawer.Screen name="Calendar" component={CalendarScreen}/>
+                            <Drawer.Screen name="Profile" component={ProfileScreen}/>
+                            <Drawer.Screen name="Habits" component={HabitScreen}/>
+                            <Drawer.Screen name={'Settings'} component={SettingsScreen}/>
+                            <Drawer.Screen name={"Statistics"} component={StatisticsScreen}/>
+                        </Drawer.Navigator>
+                    ) : (
+                        <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
+                            <Stack.Screen name="Login">
+                                {() => <LoginScreen onLogin={handleLogin}/>}
+                            </Stack.Screen>
+                            <Stack.Screen name="Register">
+                                {() => <RegisterScreen/>}
+                            </Stack.Screen>
+                        </Stack.Navigator>
 
-                )}
-            </NavigationContainer>
+                    )}
+                </NavigationContainer>
             </TaskProvider>
         </SettingsProvider>
     );
